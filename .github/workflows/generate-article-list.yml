@@ -1,0 +1,40 @@
+name: Generate Article List
+
+on:
+  push:
+    paths:
+      - "articles/**"
+      - ".github/workflows/generate-article-list.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Generate article-list.json
+        run: |
+          echo "[" > article-list.json
+          first=true
+          for file in articles/*.html; do
+            filename=$(basename "$file")
+            title=$(grep -oP '(?<=<title>).*?(?=</title>)' "$file" || echo "$filename")
+            if [ "$first" = true ]; then
+              first=false
+            else
+              echo "," >> article-list.json
+            fi
+            echo "  {\"title\": \"${title}\", \"file\": \"${filename}\"}" >> article-list.json
+          done
+          echo "]" >> article-list.json
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add article-list.json
+          git commit -m "Auto-generate article list" || echo "No changes to commit"
+          git push
