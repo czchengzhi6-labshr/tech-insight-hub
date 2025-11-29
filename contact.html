@@ -1,22 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Contact Us - Tech Insight Hub</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body { font-family: Arial; margin: 40px; max-width: 800px; line-height: 1.6; }
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact - Tech Insight Hub</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+        header {
+            background: #4a4ee8;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 12px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 40px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        button {
+            margin-top: 15px;
+            padding: 12px 20px;
+            background: #4a4ee8;
+            border: none;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #3a3fdd;
+        }
+    </style>
 </head>
 <body>
 
-<h1>Contact Us</h1>
+<header>
+    <h2>Tech Insight Hub</h2>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="privacy.html">Privacy</a>
+    </nav>
+</header>
 
-<p>If you have any questions, suggestions, or business inquiries, feel free to reach out using the information below:</p>
+<div class="container">
+    <h1>Contact Us</h1>
+    <p>If you have any questions, business inquiries, or feedback, feel free to reach out to us.</p>
 
-<p>
-Email: techinsighthub.contact@gmail.com  
-</p>
+    <h3>Email</h3>
+    <p>📩 contact.techinsight@gmail.com</p>
+
+    <h3>Message Form</h3>
+    <p>(This form is for display purposes. You can activate it later using backend services.)</p>
+
+    <input type="text" placeholder="Your Name">
+    <input type="email" placeholder="Your Email">
+    <textarea rows="5" placeholder="Your Message"></textarea>
+    <button>Send Message</button>
+</div>
+
+<footer>
+    © 2025 Tech Insight Hub — All Rights Reserved
+</footer>
 
 </body>
 </html>
