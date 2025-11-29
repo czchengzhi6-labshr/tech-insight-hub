@@ -1,84 +1,72 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>文章列表</title>
     <style>
         body { font-family: Arial, sans-serif; background:#f8f8f8; margin:0; padding:0; }
-        .container { width:90%; max-width:900px; margin:40px auto; background:white; padding:25px; border-radius:10px; }
-
-        .nav {
-            background:#222; padding:15px; text-align:center;
+        .container { width:90%; max-width:900px; margin:30px auto; }
+        h1 { font-size:28px; margin-bottom:20px; }
+        .article-list a {
+            display:block; 
+            padding:15px; 
+            background:white; 
+            margin-bottom:12px; 
+            border-radius:8px; 
+            text-decoration:none; 
+            color:#333; 
+            border:1px solid #eee;
         }
-        .nav a {
-            color:white; margin:0 15px; text-decoration:none; font-size:16px;
+        .article-list a:hover { background:#f0f0f0; }
+        .search-box {
+            width:100%; 
+            padding:12px; 
+            border:1px solid #ccc; 
+            border-radius:8px; 
+            margin-bottom:20px; 
+            font-size:16px;
         }
-
-        h1 { color:#333; }
-        .search-box input {
-            width:100%; padding:12px; margin:15px 0; border:1px solid #ccc; border-radius:8px;
-        }
-        .article-item {
-            padding:12px 5px; border-bottom:1px solid #eee;
-        }
-        .article-item a { color:#1a73e8; text-decoration:none; font-size:18px; }
     </style>
 </head>
 <body>
 
-<!-- 顶部统一导航 -->
-<div class="nav">
-    <a href="index.html">首页</a>
-    <a href="articles.html">文章</a>
-    <a href="about.html">关于我们</a>
-    <a href="contact.html">联系</a>
-</div>
-
 <div class="container">
     <h1>文章列表</h1>
 
-    <!-- 搜索框 -->
-    <div class="search-box">
-        <input type="text" id="searchInput" placeholder="搜索文章...">
-    </div>
+    <input type="text" id="searchInput" class="search-box" placeholder="搜索文章..." onkeyup="searchArticles()">
 
-    <!-- 文章列表 -->
-    <div id="articleList">加载中...</div>
+    <div class="article-list" id="articleList">加载中...</div>
 </div>
 
 <script>
-// 正确 GitHub 仓库路径
-const apiURL = "https://api.github.com/repos/czchengzhi6/czchengzhi6-labshr/contents";
+// 自动从 JSON 加载文章
+fetch("article-list.json")
+    .then(response => response.json())
+    .then(data => {
+        let list = document.getElementById("articleList");
+        list.innerHTML = "";
 
-fetch(apiURL)
-    .then(res => res.json())
-    .then(files => {
-        const list = document.getElementById("articleList");
-        list.innerHTML = "";  // 清空默认文字
-
-        // 显示所有 HTML 文章（排除非文章页）
-        files
-            .filter(f => f.name.endsWith(".html"))
-            .filter(f => !["index.html", "articles.html", "about.html", "contact.html", "privacy.html", "terms.html"].includes(f.name))
-            .forEach(f => {
-                const item = document.createElement("div");
-                item.className = "article-item";
-                item.innerHTML = `<a href="${f.name}">${f.name.replace(".html","")}</a>`;
-                list.appendChild(item);
-            });
+        data.forEach(article => {
+            let link = document.createElement("a");
+            link.href = "articles/" + article.file;
+            link.innerText = article.title;
+            list.appendChild(link);
+        });
+    })
+    .catch(err => {
+        document.getElementById("articleList").innerHTML = "无法加载文章列表";
     });
 
-// 搜索功能
-document.getElementById("searchInput").addEventListener("input", function() {
-    const keyword = this.value.toLowerCase();
-    const items = document.querySelectorAll(".article-item");
+function searchArticles() {
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    let items = document.querySelectorAll("#articleList a");
 
-    items.forEach(item => {
-        const text = item.innerText.toLowerCase();
-        item.style.display = text.includes(keyword) ? "" : "none";
+    items.forEach(a => {
+        let text = a.innerText.toLowerCase();
+        a.style.display = text.includes(input) ? "" : "none";
     });
-});
+}
 </script>
 
 </body>
