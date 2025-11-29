@@ -3,49 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Articles - Tech Insight Hub</title>
+    <title>Articles</title>
     <style>
         body { font-family: Arial, sans-serif; background:#f4f4f4; margin:0; padding:0; }
-        nav { background:#333; padding:15px; text-align:center; }
-        nav a { color:white; margin:0 15px; text-decoration:none; }
-        .container { max-width:900px; margin:40px auto; background:white; padding:25px; border-radius:10px; }
-        h1 { color:#333; }
-        .article-item {
-            padding:15px 0;
-            border-bottom:1px solid #ddd;
+        .container { width:90%; max-width:900px; margin:40px auto; background:white; padding:25px; border-radius:10px; }
+        h1 { color:#333; margin-bottom:10px;}
+        input {
+            width:100%;
+            padding:12px;
+            font-size:16px;
+            margin:15px 0;
+            border:1px solid #aaa;
+            border-radius:8px;
         }
-        .article-item a {
-            font-size:20px;
-            text-decoration:none;
-            color:#1a73e8;
-        }
-        footer { background:#222; color:white; text-align:center; padding:15px 0; margin-top:40px; }
+        ul { padding-left:20px; }
+        li { margin:12px 0; font-size:18px;}
+        a { color:#1a73e8; }
     </style>
 </head>
 <body>
 
-<nav>
-    <a href="index.html">Home</a>
-    <a href="articles.html">Articles</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-    <a href="privacy.html">Privacy</a>
-    <a href="terms.html">Terms</a>
-</nav>
-
 <div class="container">
-    <h1>Latest Articles</h1>
+    <h1>Articles</h1>
 
-    <div class="article-item">
-        <a href="ai-tools-2025.html">Top AI Tools Transforming Businesses in 2025</a>
-        <p>Published: 2025</p>
-    </div>
+    <!-- 🔍 搜索框 -->
+    <input type="text" id="searchBox" placeholder="Search articles...">
 
+    <ul id="article-list"></ul>
 </div>
 
-<footer>
-    © 2025 Tech Insight Hub — All Rights Reserved
-</footer>
+<script>
+    // GitHub 用户名和仓库名 —— 你只需要改这里（如果要改的话）
+    const username = "czchengzhi6";
+    const repo = "tech-insight-hub";
+
+    let allArticles = [];  // 用于搜索过滤
+
+    // 从 GitHub API 自动获取文章列表
+    fetch(`https://api.github.com/repos/${username}/${repo}/contents`)
+        .then(res => res.json())
+        .then(files => {
+            files.forEach(file => {
+                if (file.name.endsWith(".html") &&
+                    !["index.html","about.html","contact.html","privacy.html","terms.html","articles.html"].includes(file.name)) {
+
+                    const title = file.name
+                        .replace(".html", "")
+                        .replace(/-/g, " ")
+                        .replace(/\b\w/g, c => c.toUpperCase());
+
+                    allArticles.push({ title, filename: file.name });
+                }
+            });
+
+            renderList(allArticles);
+        });
+
+    // 渲染列表
+    function renderList(list) {
+        const ul = document.getElementById("article-list");
+        ul.innerHTML = "";
+
+        if (list.length === 0) {
+            ul.innerHTML = "<li>No articles found.</li>";
+            return;
+        }
+
+        list.forEach(article => {
+            ul.innerHTML += `<li><a href="${article.filename}">${article.title}</a></li>`;
+        });
+    }
+
+    // 搜索功能（实时过滤）
+    document.getElementById("searchBox").addEventListener("input", function() {
+        const keyword = this.value.toLowerCase();
+
+        const filtered = allArticles.filter(a =>
+            a.title.toLowerCase().includes(keyword)
+        );
+
+        renderList(filtered);
+    });
+</script>
 
 </body>
 </html>
