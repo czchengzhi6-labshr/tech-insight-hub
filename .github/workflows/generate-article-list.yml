@@ -1,10 +1,10 @@
-name: Generate Article List
+name: Generate article-list.json
 
 on:
   push:
     paths:
-      - "articles/**"
-      - ".github/workflows/generate-article-list.yml"
+      - 'articles/**'
+      - '.github/workflows/generate-article-list.yml'
   workflow_dispatch:
 
 jobs:
@@ -15,26 +15,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Generate article-list.json
+      - name: Generate article list
         run: |
+          mkdir -p articles
           echo "[" > article-list.json
-          first=true
+          FIRST=true
           for file in articles/*.html; do
-            filename=$(basename "$file")
-            title=$(grep -oP '(?<=<title>).*?(?=</title>)' "$file" || echo "$filename")
-            if [ "$first" = true ]; then
-              first=false
+            if [ "$FIRST" = true ]; then
+              FIRST=false
             else
               echo "," >> article-list.json
             fi
-            echo "  {\"title\": \"${title}\", \"file\": \"${filename}\"}" >> article-list.json
+            TITLE=$(grep -oP '(?<=<h1>).*?(?=</h1>)' "$file" | head -n 1)
+            echo "  {\"title\": \"${TITLE:-未命名文章}\", \"file\": \"$(basename "$file")\"}" >> article-list.json
           done
           echo "]" >> article-list.json
 
       - name: Commit and push changes
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
           git add article-list.json
-          git commit -m "Auto-generate article list" || echo "No changes to commit"
+          git commit -m "Auto-update article-list.json" || echo "No changes to commit"
           git push
