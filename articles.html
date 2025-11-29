@@ -3,43 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文章列表</title>
+    <title>文章列表 | Tech Insight Hub</title>
     <style>
-        body { font-family: Arial, sans-serif; background:#f8f8f8; margin:0; padding:0; }
-        .container { width:90%; max-width:900px; margin:30px auto; }
-        h1 { font-size:28px; margin-bottom:20px; }
-        .article-list a {
-            display:block; 
-            padding:15px; 
-            background:white; 
-            margin-bottom:12px; 
-            border-radius:8px; 
-            text-decoration:none; 
-            color:#333; 
-            border:1px solid #eee;
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f2f4f8;
+            color: #333;
         }
-        .article-list a:hover { background:#f0f0f0; }
+
+        /* 顶部导航栏，与主页一致 */
+        nav {
+            background: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 20px;
+        }
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+        }
+        nav a:hover {
+            color: #0078ff;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        h1 {
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        /* 搜索框统一样式 */
         .search-box {
-            width:100%; 
-            padding:12px; 
-            border:1px solid #ccc; 
-            border-radius:8px; 
-            margin-bottom:20px; 
-            font-size:16px;
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        /* 与主页卡片风格一致 */
+        .article-list a {
+            display: block;
+            background: white;
+            padding: 18px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #333;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .article-list a:hover {
+            background: #f9fbff;
+            border-color: #cddaff;
         }
     </style>
 </head>
 <body>
-    
+
+<!-- 统一的导航栏（已修复路径）-->
 <nav>
-    <a href="index.html">Home</a>
-    <a href="articles.html">Articles</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-    <a href="privacy.html">Privacy</a>
-    <a href="terms.html">Terms</a>
+    <a href="/tech-insight-hub/index.html">Home</a>
+    <a href="/tech-insight-hub/articles.html">Articles</a>
+    <a href="/tech-insight-hub/about.html">About</a>
+    <a href="/tech-insight-hub/contact.html">Contact</a>
+    <a href="/tech-insight-hub/privacy.html">Privacy</a>
+    <a href="/tech-insight-hub/terms.html">Terms</a>
 </nav>
-    
+
 <div class="container">
     <h1>文章列表</h1>
 
@@ -49,8 +93,8 @@
 </div>
 
 <script>
-// 自动从 JSON 加载文章
-fetch("article-list.json")
+// 自动从 JSON 加载文章（修正路径）
+fetch("/tech-insight-hub/article-list.json")
     .then(response => response.json())
     .then(data => {
         let list = document.getElementById("articleList");
@@ -58,7 +102,7 @@ fetch("article-list.json")
 
         data.forEach(article => {
             let link = document.createElement("a");
-            link.href = "articles/" + article.file;
+            link.href = "/tech-insight-hub/articles/" + article.file;
             link.innerText = article.title;
             list.appendChild(link);
         });
