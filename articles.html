@@ -1,89 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Articles</title>
+    <title>文章列表</title>
     <style>
-        body { font-family: Arial, sans-serif; background:#f4f4f4; margin:0; padding:0; }
+        body { font-family: Arial, sans-serif; background:#f8f8f8; margin:0; padding:0; }
         .container { width:90%; max-width:900px; margin:40px auto; background:white; padding:25px; border-radius:10px; }
-        h1 { color:#333; margin-bottom:10px;}
-        input {
-            width:100%;
-            padding:12px;
-            font-size:16px;
-            margin:15px 0;
-            border:1px solid #aaa;
-            border-radius:8px;
+
+        .nav {
+            background:#222; padding:15px; text-align:center;
         }
-        ul { padding-left:20px; }
-        li { margin:12px 0; font-size:18px;}
-        a { color:#1a73e8; }
+        .nav a {
+            color:white; margin:0 15px; text-decoration:none; font-size:16px;
+        }
+
+        h1 { color:#333; }
+        .search-box input {
+            width:100%; padding:12px; margin:15px 0; border:1px solid #ccc; border-radius:8px;
+        }
+        .article-item {
+            padding:12px 5px; border-bottom:1px solid #eee;
+        }
+        .article-item a { color:#1a73e8; text-decoration:none; font-size:18px; }
     </style>
 </head>
 <body>
 
+<!-- 顶部统一导航 -->
+<div class="nav">
+    <a href="index.html">首页</a>
+    <a href="articles.html">文章</a>
+    <a href="about.html">关于我们</a>
+    <a href="contact.html">联系</a>
+</div>
+
 <div class="container">
-    <h1>Articles</h1>
+    <h1>文章列表</h1>
 
-    <!-- 🔍 搜索框 -->
-    <input type="text" id="searchBox" placeholder="Search articles...">
+    <!-- 搜索框 -->
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="搜索文章...">
+    </div>
 
-    <ul id="article-list"></ul>
+    <!-- 文章列表 -->
+    <div id="articleList">加载中...</div>
 </div>
 
 <script>
-    // GitHub 用户名和仓库名 —— 你只需要改这里（如果要改的话）
-    const username = "czchengzhi6";
-    const repo = "tech-insight-hub";
+// 正确 GitHub 仓库路径
+const apiURL = "https://api.github.com/repos/czchengzhi6/czchengzhi6-labshr/contents";
 
-    let allArticles = [];  // 用于搜索过滤
+fetch(apiURL)
+    .then(res => res.json())
+    .then(files => {
+        const list = document.getElementById("articleList");
+        list.innerHTML = "";  // 清空默认文字
 
-    // 从 GitHub API 自动获取文章列表
-    fetch(`https://api.github.com/repos/${username}/${repo}/contents`)
-        .then(res => res.json())
-        .then(files => {
-            files.forEach(file => {
-                if (file.name.endsWith(".html") &&
-                    !["index.html","about.html","contact.html","privacy.html","terms.html","articles.html"].includes(file.name)) {
-
-                    const title = file.name
-                        .replace(".html", "")
-                        .replace(/-/g, " ")
-                        .replace(/\b\w/g, c => c.toUpperCase());
-
-                    allArticles.push({ title, filename: file.name });
-                }
+        // 显示所有 HTML 文章（排除非文章页）
+        files
+            .filter(f => f.name.endsWith(".html"))
+            .filter(f => !["index.html", "articles.html", "about.html", "contact.html", "privacy.html", "terms.html"].includes(f.name))
+            .forEach(f => {
+                const item = document.createElement("div");
+                item.className = "article-item";
+                item.innerHTML = `<a href="${f.name}">${f.name.replace(".html","")}</a>`;
+                list.appendChild(item);
             });
-
-            renderList(allArticles);
-        });
-
-    // 渲染列表
-    function renderList(list) {
-        const ul = document.getElementById("article-list");
-        ul.innerHTML = "";
-
-        if (list.length === 0) {
-            ul.innerHTML = "<li>No articles found.</li>";
-            return;
-        }
-
-        list.forEach(article => {
-            ul.innerHTML += `<li><a href="${article.filename}">${article.title}</a></li>`;
-        });
-    }
-
-    // 搜索功能（实时过滤）
-    document.getElementById("searchBox").addEventListener("input", function() {
-        const keyword = this.value.toLowerCase();
-
-        const filtered = allArticles.filter(a =>
-            a.title.toLowerCase().includes(keyword)
-        );
-
-        renderList(filtered);
     });
+
+// 搜索功能
+document.getElementById("searchInput").addEventListener("input", function() {
+    const keyword = this.value.toLowerCase();
+    const items = document.querySelectorAll(".article-item");
+
+    items.forEach(item => {
+        const text = item.innerText.toLowerCase();
+        item.style.display = text.includes(keyword) ? "" : "none";
+    });
+});
 </script>
 
 </body>
