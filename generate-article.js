@@ -1,189 +1,103 @@
-const axios = require("axios");
-const fs = require("fs");
-const path = require("path");
-const crypto = require("crypto");
+// generate-article.js
+// 完整最终版（含广告 / HTML 结构优化 / AI 内容生成）
 
-// ---- CONFIG ----
-const REPO = process.env.GITHUB_REPOSITORY;
-const TOKEN = process.env.GITHUB_TOKEN;
-const API_KEY = process.env.DEEPSEEK_API_KEY;
+import fs from "fs";
+import path from "path";
+import { ChatGPTAPI } from "chatgpt";
 
-function generateId() {
-    return crypto.randomBytes(8).toString("hex");
+// 你的 API 密钥从环境变量获取
+const api = new ChatGPTAPI({
+    apiKey: process.env.OPENAI_API_KEY
+});
+
+function getDateString() {
+    const now = new Date();
+    return now.toISOString().split("T")[0];
 }
 
-// ---- CALL DEEPSEEK API ----
 async function generateArticle() {
+    console.log("🚀 Starting article generation...");
+
+    // 1. 调用 GPT 生成文章
     const prompt = `
-Write an 800-word English technology article. 
-The article should be insightful, professional, and suitable for a tech website.
-Topics could include AI, robotics, cloud computing, cybersecurity, or emerging technologies.
-Do NOT add HTML—only pure text content with section titles.
-`;
+Generate an 800-word original English technology article. 
+Requirements:
+- Topic: the latest emerging technologies
+- Style: professional, clear, reader-friendly
+- Include insights, examples, and analysis
+- Do NOT include ads. Just pure article content.
+    `;
 
-    try {
-        const res = await axios.post(
-            "https://api.deepseek.com/chat/completions",
-            {
-                model: "deepseek-chat",
-                messages: [{ role: "user", content: prompt }],
-                max_tokens: 2000,
-                temperature: 0.7
-            },
-            { headers: { Authorization: `Bearer ${API_KEY}` } }
-        );
+    console.log("🧠 Asking ChatGPT for article content...");
 
-        return res.data.choices[0].message.content.trim();
+    const res = await api.sendMessage(prompt);
+    const content = res.text;
 
-    } catch (err) {
-        console.error("❌ DeepSeek API ERROR:", err.response?.data || err);
-        throw err;
-    }
-}
+    // 第一段作为标题
+    const title = content.split("\n")[0].replace(/^#+\s*/, "").trim();
+    const date = getDateString();
 
-// ---- HTML TEMPLATE ----
-function generateHTML(title, content, id) {
-    const coverUrl = `https://source.unsplash.com/random/1200x600/?technology,AI,software`;
+    console.log("📄 Title generated:", title);
 
-    return `
+    // HTML 模板（含你的两个广告）
+    const html = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>${title}</title>
-
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #f2f4f8;
-        margin: 0;
-        padding: 0;
-    }
-    .container {
-        max-width: 900px;
-        background: white;
-        margin: 40px auto;
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    }
-    h1 {
-        margin-top: 0;
-        font-size: 32px;
-    }
-    img.cover {
-        width: 100%;
-        border-radius: 12px;
-        margin: 20px 0;
-    }
-    .meta {
-        color: #555;
-        font-size: 14px;
-        margin-bottom: 20px;
-    }
-    .ad-box {
-        padding: 18px;
-        margin: 25px 0;
-        background: #fff4d6;
-        border: 1px solid #f2d28b;
-        border-radius: 8px;
-        text-align: center;
-        font-weight: bold;
-        color: #7a5a00;
-    }
-    .content {
-        font-size: 18px;
-        line-height: 1.8;
-        white-space: pre-line;
-    }
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${title}</title>
 </head>
 
-<body>
+<body style="font-family: Arial, sans-serif; line-height: 1.7; padding: 20px; max-width: 800px; margin: auto;">
 
-<div class="container">
+    <!-- === Top AD: Monetag === -->
+    <div style="margin: 20px 0;">
+        <script>
+            (function(s){
+                s.dataset.zone='10258891';
+                s.src='https://groleegni.net/vignette.min.js';
+            })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))
+        </script>
+    </div>
 
     <h1>${title}</h1>
+    <p><em>${date}</em></p>
 
-    <img src="${coverUrl}" class="cover" alt="cover image">
-
-    <p class="meta">Views: <span id="views">Loading...</span></p>
-
-    <div class="ad-box">
-        🔔 Advertisement Space — Your Ad Can Be Here
+    <div id="content">
+        ${content.replace(/\n/g, "<br><br>")}
     </div>
 
-    <div class="content">
-${content}
+    <!-- === Mid AD: quge5 === -->
+    <div style="margin: 30px 0;">
+        <script src="https://quge5.com/88/tag.min.js"
+            data-zone="189330"
+            async data-cfasync="false"></script>
     </div>
 
-    <div class="ad-box">
-        🔔 Sponsored — Contact us for ad placement
+    <!-- === Bottom expandable AD slot === -->
+    <div style="margin: 30px 0;">
+        <!-- You may add more ads here -->
     </div>
-
-</div>
-
-<script>
-// load + update view count
-fetch("https://raw.githubusercontent.com/${REPO}/main/view-count.json")
-  .then(r => r.json())
-  .then(data => {
-    if (!data["${id}"]) data["${id}"] = 0;
-    data["${id}"]++;
-    document.getElementById("views").textContent = data["${id}"];
-
-    fetch("https://api.github.com/repos/${REPO}/contents/view-count.json", {
-      method: "PUT",
-      headers: {
-        "Authorization": "token ${TOKEN}",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        message: "Update view count",
-        content: btoa(JSON.stringify(data, null, 2)),
-        sha: undefined
-      })
-    });
-  });
-</script>
 
 </body>
-</html>`;
-}
+</html>
+`;
 
-// ---- MAIN WORKFLOW ----
-async function main() {
-    console.log("🚀 Generating new tech article...");
+    // 保存路径
+    const fileName = `${date}-${title.replace(/[^a-zA-Z0-9]+/g, "-")}.html`;
+    const folder = "./articles";
+    const savePath = path.join(folder, fileName);
 
-    const rawText = await generateArticle();
-
-    const title = rawText.split("\n")[0].replace(/^#+\s*/, "").trim();
-    const id = generateId();
-    const filename = `${id}.html`;
-
-    const html = generateHTML(title, rawText, id);
-
-    // Ensure articles folder exists
-    const articlesDir = path.join(__dirname, "articles");
-    if (!fs.existsSync(articlesDir)) fs.mkdirSync(articlesDir);
-
-    // Save HTML article
-    fs.writeFileSync(path.join(articlesDir, filename), html);
-    console.log("📄 Article saved:", filename);
-
-    // Update article-list.json
-    const listPath = path.join(__dirname, "article-list.json");
-    let list = [];
-
-    if (fs.existsSync(listPath)) {
-        list = JSON.parse(fs.readFileSync(listPath));
+    if (!fs.existsSync(folder)) {
+        fs.mkdirSync(folder);
     }
 
-    list.unshift({ id, title, file: filename });
+    fs.writeFileSync(savePath, html);
 
-    fs.writeFileSync(listPath, JSON.stringify(list, null, 2));
-    console.log("📚 Updated article-list.json");
+    console.log(`✅ Article successfully created: ${savePath}`);
 }
 
-main();
+generateArticle().catch(err => {
+    console.error("❌ Error generating article:", err);
+});
