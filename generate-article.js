@@ -1,124 +1,189 @@
-// generate-article.js
-const fs = require('fs');
-const path = require('path');
-const axios = require('axios');
+const axios = require("axios");
+const fs = require("fs");
+const path = require("path");
+const crypto = require("crypto");
 
-/**
- * 注意：本脚本只在 CI (GitHub Actions) 中执行，绝对不要把 secrets 写入最终生成的 HTML。
- * 在仓库 Settings -> Secrets 中设置 DEEPSEEK_API_KEY 或你的 AI KEY
- */
+// ---- CONFIG ----
+const REPO = process.env.GITHUB_REPOSITORY;
+const TOKEN = process.env.GITHUB_TOKEN;
+const API_KEY = process.env.DEEPSEEK_API_KEY;
 
-const OUT_DIR = path.join(process.cwd(), 'articles');
+function generateId() {
+    return crypto.randomBytes(8).toString("hex");
+}
 
-if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
+// ---- CALL DEEPSEEK API ----
+async function generateArticle() {
+    const prompt = `
+Write an 800-word English technology article. 
+The article should be insightful, professional, and suitable for a tech website.
+Topics could include AI, robotics, cloud computing, cybersecurity, or emerging technologies.
+Do NOT add HTML—only pure text content with section titles.
+`;
 
-async function callAI(prompt) {
-  const apiKey = process.env.DEEPSEEK_API_KEY;
-  if (!apiKey) throw new Error('Missing DEEPSEEK_API_KEY secret');
+    try {
+        const res = await axios.post(
+            "https://api.deepseek.com/chat/completions",
+            {
+                model: "deepseek-chat",
+                messages: [{ role: "user", content: prompt }],
+                max_tokens: 2000,
+                temperature: 0.7
+            },
+            { headers: { Authorization: `Bearer ${API_KEY}` } }
+        );
 
-  // 根据你的 API 替换 URL / body
-  const resp = await axios.post(
-    'https://api.deepseek.com/v1/chat/completions',
-    {
-      model: 'deepseek-chat',
-      messages: [{ role: 'system', content: prompt }],
-      max_tokens: 1200
-    },
-    {
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json'
-      },
-      timeout: 60 * 1000
+        return res.data.choices[0].message.content.trim();
+
+    } catch (err) {
+        console.error("❌ DeepSeek API ERROR:", err.response?.data || err);
+        throw err;
     }
-  );
-
-  // 适配返回路径
-  return resp.data?.choices?.[0]?.message?.content || '';
 }
 
-function sanitizeFileName(title) {
-  return title.trim()
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^a-z0-9\-]/g, '')
-    .substring(0, 80) + '.html';
-}
+// ---- HTML TEMPLATE ----
+function generateHTML(title, content, id) {
+    const coverUrl = `https://source.unsplash.com/random/1200x600/?technology,AI,software`;
 
-// 生成 HTML 模板（注意：不写任何 token 到文件中）
-function buildHtml(title, contentHtml) {
-  const cover = `https://source.unsplash.com/random/1200x600/?technology,ai`;
-  return `<!DOCTYPE html>
-<html lang="zh-CN">
+    return `
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>${escapeHtml(title)}</title>
-<link rel="stylesheet" href="/style.css" />
-</head>
-<body>
-<nav><!-- 你站点的导航可以保持一致 --></nav>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>${title}</title>
 
-<main class="container">
-  <article>
-    <h1>${escapeHtml(title)}</h1>
-    <img src="${cover}" alt="${escapeHtml(title)}" style="width:100%;border-radius:8px;margin:20px 0;" />
-    <p>阅读量：<span id="views">--</span></p>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f2f4f8;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 900px;
+        background: white;
+        margin: 40px auto;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+        margin-top: 0;
+        font-size: 32px;
+    }
+    img.cover {
+        width: 100%;
+        border-radius: 12px;
+        margin: 20px 0;
+    }
+    .meta {
+        color: #555;
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+    .ad-box {
+        padding: 18px;
+        margin: 25px 0;
+        background: #fff4d6;
+        border: 1px solid #f2d28b;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: bold;
+        color: #7a5a00;
+    }
+    .content {
+        font-size: 18px;
+        line-height: 1.8;
+        white-space: pre-line;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>${title}</h1>
+
+    <img src="${coverUrl}" class="cover" alt="cover image">
+
+    <p class="meta">Views: <span id="views">Loading...</span></p>
+
+    <div class="ad-box">
+        🔔 Advertisement Space — Your Ad Can Be Here
+    </div>
 
     <div class="content">
-      ${contentHtml}
+${content}
     </div>
-  </article>
-</main>
 
-<footer><!-- footer --></footer>
+    <div class="ad-box">
+        🔔 Sponsored — Contact us for ad placement
+    </div>
 
-<!-- 说明：页面不用写任何密钥，也不要尝试从页面直接修改仓库 -->
+</div>
+
+<script>
+// load + update view count
+fetch("https://raw.githubusercontent.com/${REPO}/main/view-count.json")
+  .then(r => r.json())
+  .then(data => {
+    if (!data["${id}"]) data["${id}"] = 0;
+    data["${id}"]++;
+    document.getElementById("views").textContent = data["${id}"];
+
+    fetch("https://api.github.com/repos/${REPO}/contents/view-count.json", {
+      method: "PUT",
+      headers: {
+        "Authorization": "token ${TOKEN}",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: "Update view count",
+        content: btoa(JSON.stringify(data, null, 2)),
+        sha: undefined
+      })
+    });
+  });
+</script>
+
 </body>
 </html>`;
 }
 
-function escapeHtml(str) {
-  return (str || '').replace(/[&<>"']/g, function(m){
-    return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]);
-  });
+// ---- MAIN WORKFLOW ----
+async function main() {
+    console.log("🚀 Generating new tech article...");
+
+    const rawText = await generateArticle();
+
+    const title = rawText.split("\n")[0].replace(/^#+\s*/, "").trim();
+    const id = generateId();
+    const filename = `${id}.html`;
+
+    const html = generateHTML(title, rawText, id);
+
+    // Ensure articles folder exists
+    const articlesDir = path.join(__dirname, "articles");
+    if (!fs.existsSync(articlesDir)) fs.mkdirSync(articlesDir);
+
+    // Save HTML article
+    fs.writeFileSync(path.join(articlesDir, filename), html);
+    console.log("📄 Article saved:", filename);
+
+    // Update article-list.json
+    const listPath = path.join(__dirname, "article-list.json");
+    let list = [];
+
+    if (fs.existsSync(listPath)) {
+        list = JSON.parse(fs.readFileSync(listPath));
+    }
+
+    list.unshift({ id, title, file: filename });
+
+    fs.writeFileSync(listPath, JSON.stringify(list, null, 2));
+    console.log("📚 Updated article-list.json");
 }
 
-function mdToHtml(mdText) {
-  // 简易转换：换行 -> p，或者你可以用 marked 等库（但需在 package.json 列出）
-  // 这里做非常基础的处理：把 Markdown 的标题/段落转换为 HTML
-  let html = mdText
-    .replace(/^### (.*$)/gm, '<h3>$1</h3>')
-    .replace(/^## (.*$)/gm, '<h2>$1</h2>')
-    .replace(/^# (.*$)/gm, '<h1>$1</h1>')
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    .replace(/\n{2,}/g, '</p><p>')
-    ;
-
-  // wrap with <p>
-  if (!html.startsWith('<p>')) html = '<p>' + html + '</p>';
-  return html;
-}
-
-(async () => {
-  try {
-    const prompt = `请写一篇中文技术文章，主题：人工智能的最新趋势。包含标题、若干小节，每个小节有段落，适合发布到博客。长度大约 600-900 字。不要在输出中包含任何 API keys、代码块或私人信息。`;
-    const aiText = await callAI(prompt);
-
-    // 尝试从返回中解析标题（如果 AI 返回 Markdown 的 "# 标题"）
-    let title = (aiText.match(/^#\s*(.+)/m) || aiText.match(/^(.+)\n/))[1] || '未命名文章';
-    title = title.trim();
-
-    const fileName = sanitizeFileName(title);
-    const filePath = path.join(OUT_DIR, fileName);
-
-    const htmlContent = buildHtml(title, mdToHtml(aiText.replace(/^#\s*.+/m, '').trim()));
-
-    fs.writeFileSync(filePath, htmlContent, 'utf-8');
-    console.log('Generated article:', filePath);
-  } catch (err) {
-    console.error('Error generating article:', err.message || err);
-    process.exit(1);
-  }
-})();
+main();
