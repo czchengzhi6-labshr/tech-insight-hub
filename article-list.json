@@ -1,37 +1,42 @@
 [
   {
     "title": "## 人工智能的下一波浪潮：生成式AI与多模态学习",
-    "url": "/articles/-AI.html",
+    "file": "-AI.html",
     "date": "2025-11-30"
   },
   {
     "title": "容器化技术如何重塑现代软件部署",
-    "url": "/articles/.html",
+    "file": ".html",
+    "date": "2025-11-30"
+  },
+  {
+    "title": "**The Silent Shift: How Ambient Computing is Redefining Our Interaction with Technology**",
+    "file": "3e697101735ffed1.html",
     "date": "2025-11-30"
   },
   {
     "title": "深入理解JavaScript中的闭包机制",
-    "url": "/articles/JavaScript.html",
+    "file": "JavaScript.html",
     "date": "2025-11-30"
   },
   {
     "title": "Top AI Productivity Tools Every Business Should Use in 2025",
-    "url": "/articles/ai-productivity-tools-2025.html",
+    "file": "ai-productivity-tools-2025.html",
     "date": "2025-11-30"
   },
   {
     "title": "Top AI Tools Transforming Businesses in 2025",
-    "url": "/articles/ai-tools-2025.html",
+    "file": "ai-tools-2025.html",
     "date": "2025-11-30"
   },
   {
     "title": "AI 2025：改变世界的 8 大趋势",
-    "url": "/articles/ai-trend-2025.html",
+    "file": "ai-trend-2025.html",
     "date": "2025-11-30"
   },
   {
     "title": "2025年AI趋势深度解析：技术、产业与未来",
-    "url": "/articles/ai_trends_2025.html",
+    "file": "ai_trends_2025.html",
     "date": "2025-11-30"
   }
 ]
