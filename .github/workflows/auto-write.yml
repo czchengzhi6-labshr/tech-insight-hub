@@ -25,14 +25,12 @@ jobs:
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
         run: |
-          node << 'EOF'
+          node <<'EOF'
           const axios = require("axios");
           const fs = require("fs");
           const path = require("path");
 
           async function generateArticle() {
-            console.log("📝 Generating tech-style article...");
-
             const articlePrompt = `
 Write a high-quality, original English technology article (1000–1500 words).
 Style: futuristic, informative, scientific.
@@ -42,7 +40,6 @@ Insert an advertisement placeholder like this:
 
 Do NOT wrap output in code fences.
             `;
-
             const response = await axios.post(
               "https://api.deepseek.com/v1/chat/completions",
               {
@@ -59,70 +56,43 @@ Do NOT wrap output in code fences.
                 }
               }
             );
-
             return response.data.choices[0].message.content;
           }
 
           async function generateCover() {
-            console.log("🎨 Generating cover image...");
-
             const imageUrl = "https://picsum.photos/1200/630";
             const imgBuffer = (await axios.get(imageUrl, {responseType:"arraybuffer"})).data;
-
+            if (!fs.existsSync("covers")) fs.mkdirSync("covers");
             const fileName = `cover_${Date.now()}.jpg`;
-            const filePath = path.join("covers", fileName);
-
-            fs.writeFileSync(filePath, imgBuffer);
+            fs.writeFileSync(path.join("covers", fileName), imgBuffer);
             return fileName;
           }
 
-          async function main() {
+          (async () => {
             if (!fs.existsSync("articles")) fs.mkdirSync("articles");
-            if (!fs.existsSync("covers")) fs.mkdirSync("covers");
-
             const articleText = await generateArticle();
             const coverFile = await generateCover();
-
             const articleFile = `article_${Date.now()}.html`;
-
             const html = `
-<html>
-<head><meta charset="UTF-8"><title>Tech Article</title></head>
-<body>
+<html><head><meta charset="UTF-8"><title>Tech Article</title></head><body>
 <div class="container">
 <img src="../covers/${coverFile}" style="width:100%; border-radius:12px;">
 <h1>AI Generated Tech Article</h1>
-
 ${articleText.replace(/\n/g, "<br>")}
-
 <br><br>
 <div class="ad">AD SPACE</div>
-
 </div>
-</body>
-</html>
+</body></html>
             `;
-
             fs.writeFileSync(path.join("articles", articleFile), html);
-
             let list = [];
             if (fs.existsSync("article-list.json")) {
-              list = JSON.parse(fs.readFileSync("article-list.json"));
+              try { list = JSON.parse(fs.readFileSync("article-list.json")); } catch(e){ list = []; }
             }
-
-            list.push({
-              title: "AI Tech Article",
-              file: articleFile,
-              cover: coverFile,
-              timestamp: Date.now()
-            });
-
+            list.push({ title: "AI Tech Article", file: articleFile, cover: coverFile, timestamp: Date.now() });
             fs.writeFileSync("article-list.json", JSON.stringify(list, null, 2));
-
             console.log("✔ Article + cover saved");
-          }
-
-          main();
+          })();
           EOF
 
       - name: Commit & Push
