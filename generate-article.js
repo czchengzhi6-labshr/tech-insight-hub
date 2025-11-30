@@ -1,54 +1,120 @@
-name: Auto Generate & Publish Article
+// generate-article.js
+// Auto-generate technology articles in English using DeepSeek API.
+// Output HTML with built-in ad slots.
 
-on:
-  workflow_dispatch: {}
-  schedule:
-    - cron: "0 */6 * * *" # 每6小时一次（按需修改）
+const fs = require("fs");
+const path = require("path");
+const https = require("https");
 
-jobs:
-  publish:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          persist-credentials: true
+// ====== SETTINGS ======
+const API_KEY = process.env.DEEPSEEK_API_KEY;
+if (!API_KEY) {
+  console.error("❌ Missing DEEPSEEK_API_KEY in GitHub Secrets");
+  process.exit(1);
+}
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "18"
+const ARTICLES_DIR = path.join(process.cwd(), "articles");
+if (!fs.existsSync(ARTICLES_DIR)) fs.mkdirSync(ARTICLES_DIR);
 
-      - name: Install dependencies
-        run: |
-          # 如果你在 package.json 指定了依赖，使用 npm ci 更稳定
-          if [ -f package-lock.json ]; then npm ci; else npm install; fi
+// ====== AI REQUEST FUNCTION ======
+function callDeepSeek(prompt) {
+  const data = JSON.stringify({
+    model: "deepseek-chat",
+    messages: [{ role: "user", content: prompt }],
+    max_tokens: 1000,
+    temperature: 0.9
+  });
 
-      - name: Run generate-article (create article files)
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}   # 或你的AI KEY
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }} # 如果你的脚本用到了其他API
-          GITHUB_REPOSITORY: ${{ github.repository }}
-        run: |
-          echo "Running generate-article.js"
-          node ./generate-article.js
+  const options = {
+    hostname: "api.deepseek.com",
+    port: 443,
+    path: "/v1/chat/completions",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${API_KEY}`,
+      "Content-Length": data.length
+    }
+  };
 
-      - name: Generate article list
-        run: |
-          echo "Running generate-article-list.js"
-          node ./generate-article-list.js
+  return new Promise((resolve, reject) => {
+    const req = https.request(options, (res) => {
+      let body = "";
+      res.on("data", (chunk) => body += chunk);
+      res.on("end", () => {
+        try {
+          const json = JSON.parse(body);
+          resolve(json.choices[0].message.content);
+        } catch (e) {
+          reject("Invalid JSON: " + body);
+        }
+      });
+    });
 
-      - name: Commit & Push changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "chore: auto generate article(s) and update list [ci skip]" || echo "commit failed"
-            git push origin HEAD:${{ github.ref_name }}
-          fi
+    req.on("error", reject);
+    req.write(data);
+    req.end();
+  });
+}
+
+// ====== ARTICLE TEMPLATE ======
+function wrapHTML(title, content) {
+  const ad1 = `<script>(function(s){s.dataset.zone='10258891',s.src='https://groleegni.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>`;
+  const ad2 = `<script src="https://quge5.com/88/tag.min.js" data-zone="189330" async data-cfasync="false"></script>`;
+
+  return `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>${title}</title>
+<style>
+body { max-width: 780px; margin: auto; font-family: Arial; line-height: 1.6; padding: 20px; }
+h1 { margin-bottom: 20px; }
+.ad { margin: 25px 0; }
+</style>
+</head>
+<body>
+<h1>${title}</h1>
+
+<div class="ad">${ad1}</div>
+
+${content}
+
+<div class="ad">${ad2}</div>
+
+</body>
+</html>`;
+}
+
+// ====== MAIN ======
+async function main() {
+  console.log("🚀 Generating tech article...");
+  const prompt = `
+Write an 800-word technology article in English.
+The topic should be related to AI, robotics, chips, cybersecurity, cloud computing or future tech.
+Write in a clear, professional tone, with Markdown headings.
+Do NOT include code unless necessary.
+  `;
+
+  let text;
+  try {
+    text = await callDeepSeek(prompt);
+  } catch (err) {
+    console.error("AI request failed:", err);
+    process.exit(1);
+  }
+
+  const titleMatch = text.match(/#+\s*(.*)/);
+  const title = titleMatch ? titleMatch[1].trim() : "Tech Insight";
+
+  const filename = title.replace(/[^a-z0-9]+/gi, "-").toLowerCase() + ".html";
+  const filepath = path.join(ARTICLES_DIR, filename);
+
+  const html = wrapHTML(title, text.replace(/\n/g, "<br>"));
+
+  fs.writeFileSync(filepath, html, "utf8");
+  console.log("✅ Article generated:", filename);
+}
+
+main();
