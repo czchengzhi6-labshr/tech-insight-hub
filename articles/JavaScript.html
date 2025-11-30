@@ -3,23 +3,19 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>深入理解JavaScript事件循环机制</title>
+<title>从单线程到异步编程：JavaScript并发模型的演进</title>
 <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
 <main style="max-width:900px;margin:30px auto;padding:0 16px;">
-  <h1>深入理解JavaScript事件循环机制</h1>
-  <img src="https://source.unsplash.com/random/1200x600/?technology" alt="cover" style="width:100%;border-radius:8px;margin:16px 0;" />
+  <h1>从单线程到异步编程：JavaScript并发模型的演进</h1>
+  <img src="https://source.unsplash.com/random/1200x600/?software" alt="cover" style="width:100%;border-radius:8px;margin:16px 0;" />
   <p style="color:#666">发布时间：2025-11-30</p>
   <article><p></p>
-<p>事件循环是JavaScript实现异步编程的核心机制。作为单线程语言，JavaScript通过事件循环来处理并发操作，避免了多线程环境下的复杂同步问题。</p>
-<p>事件循环的基本原理是持续检查调用栈和任务队列。当调用栈为空时，事件循环会从任务队列中取出第一个任务推入调用栈执行。这个过程不断重复，形成了"循环"。</p>
-<p>任务队列分为微任务队列和宏任务队列。微任务包括Promise回调、MutationObserver等，宏任务包括setTimeout、setInterval、I/O操作等。在一次事件循环中，会先执行所有微任务，再执行一个宏任务。</p>
-<p>```javascript<br/>console.log('开始');</p>
-<p>setTimeout(() => {<br/>    console.log('定时器回调');<br/>}, 0);</p>
-<p>Promise.resolve().then(() => {<br/>    console.log('Promise回调');<br/>});</p>
-<p>console.log('结束');<br/>```<br/>输出顺序为：开始、结束、Promise回调、定时器回调。</p>
-<p>**作者总结**：理解事件循环机制对编写高效、无阻塞的JavaScript代码至关重要。掌握微任务和宏任务的执行顺序，能够帮助开发者更好地处理异步操作，避免常见的并发陷阱。</p></article>
+<p>JavaScript最初作为浏览器脚本语言，采用单线程执行模型。这意味着所有任务必须排队执行，前一个任务完成后才能执行下一个。这种设计避免了多线程环境中的竞态条件和锁竞争问题，但也带来了明显的性能瓶颈。当遇到耗时操作时，整个程序会被阻塞，用户体验受到严重影响。</p>
+<p>为了解决这个问题，JavaScript引入了事件循环机制。通过回调函数、Promise和async/await等特性，开发者可以编写非阻塞的异步代码。事件循环持续监控调用栈和任务队列，当调用栈为空时，就从任务队列中取出回调函数执行。这种机制使得JavaScript能够在等待I/O操作完成的同时继续处理其他任务。</p>
+<p>现代JavaScript运行时环境进一步优化了并发处理能力。Web Worker允许在后台线程中运行脚本，实现真正的并行计算。Node.js的集群模块则能充分利用多核CPU的性能。这些改进使得JavaScript能够胜任更复杂的应用场景，从简单的网页交互到高性能的服务器端应用。</p>
+<p>**作者总结**：JavaScript的并发模型从最初简单的单线程发展到如今成熟的异步编程体系，这一演进过程充分体现了语言设计者面对实际需求时的创新思维。理解这些并发机制的工作原理，对于编写高效、可靠的JavaScript应用程序至关重要。</p></article>
 </main>
 </body>
 </html>
