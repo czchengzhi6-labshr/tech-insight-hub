@@ -21,15 +21,77 @@ jobs:
       - name: Install axios
         run: npm install axios
 
-      - name: Run generator script
+      - name: Generate Tech Article + Cover Image
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-        run: node generate-article.js
+        run: |
+          node <<'EOF'
+          const axios = require("axios");
+          const fs = require("fs");
+          const path = require("path");
+
+          const articlePrompt = `Write a high-quality, original English technology article (1000–1500 words).
+          Style: futuristic, informative, scientific.
+          Insert an advertisement placeholder like this:
+
+          ---ADVERTISEMENT-BLOCK---
+
+          Do NOT wrap output in code fences.
+          `;
+
+          async function generateArticle() {
+            const response = await axios.post(
+              "https://api.deepseek.com/v1/chat/completions",
+              {
+                model: "deepseek-chat",
+                messages: [
+                  { role: "system", content: "You are an expert technology columnist." },
+                  { role: "user", content: articlePrompt }
+                ]
+              },
+              {
+                headers: {
+                  "Authorization": `Bearer ${process.env.DEEPSEEK_API_KEY}`,
+                  "Content-Type": "application/json"
+                }
+              }
+            );
+            return response.data.choices[0].message.content;
+          }
+
+          async function generateCover() {
+            const imageUrl = "https://picsum.photos/1200/630";
+            const imgBuffer = (await axios.get(imageUrl, {responseType:"arraybuffer"})).data;
+            if (!fs.existsSync("covers")) fs.mkdirSync("covers");
+            const fileName = `cover_${Date.now()}.jpg`;
+            fs.writeFileSync(path.join("covers", fileName), imgBuffer);
+            return fileName;
+          }
+
+          (async () => {
+            if (!fs.existsSync("articles")) fs.mkdirSync("articles");
+            const articleText = await generateArticle();
+            const coverFile = await generateCover();
+            const articleFile = `article_${Date.now()}.html`;
+            const html = `
+<html><head><meta charset="UTF-8"><title>Tech Article</title></head><body>
+<div class="container">
+<img src="../covers/${coverFile}" style="width:100%; border-radius:12px;">
+<h1>AI Generated Tech Article</h1>
+${articleText.replace(/\n/g, "<br>")}
+<br><br>
+<div class="ad">AD SPACE</div>
+</div>
+</body></html>
+`;
+            fs.writeFileSync(path.join("articles", articleFile), html);
+            console.log("✔ Article + cover saved");
+          })();
+          EOF
 
       - name: Commit & Push
         run: |
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           git add .
-          git commit -m "Auto-generated tech article" || echo "No changes"
-          git push
+          git commit -m "Auto-generated tech article + cover" || echo "No changes
