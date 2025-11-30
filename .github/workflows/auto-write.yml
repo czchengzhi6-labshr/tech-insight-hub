@@ -2,7 +2,7 @@ name: Auto Tech Article Writer
 
 on:
   schedule:
-    - cron: "0 */4 * * *"   # 每4小时运行一次
+    - cron: "0 */4 * * *"
   workflow_dispatch:
 
 jobs:
@@ -36,7 +36,7 @@ jobs:
             const articlePrompt = `
 Write a high-quality, original English technology article (1000–1500 words).
 Style: futuristic, informative, scientific.
-Include one placeholder for advertisement:
+Insert an advertisement placeholder like this:
 
 ---ADVERTISEMENT-BLOCK---
 
