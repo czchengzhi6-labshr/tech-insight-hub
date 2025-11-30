@@ -12,7 +12,6 @@
             color: #333;
         }
 
-        /* 顶部导航栏，与主页一致 */
         nav {
             background: white;
             padding: 15px 20px;
@@ -25,9 +24,7 @@
             color: #333;
             font-weight: 600;
         }
-        nav a:hover {
-            color: #0078ff;
-        }
+        nav a:hover { color: #0078ff; }
 
         .container {
             width: 90%;
@@ -35,13 +32,8 @@
             margin: 40px auto;
         }
 
-        h1 {
-            font-size: 30px;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
+        h1 { font-size: 30px; margin-bottom: 20px; }
 
-        /* 搜索框统一样式 */
         .search-box {
             width: 100%;
             padding: 14px;
@@ -52,7 +44,6 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        /* 与主页卡片风格一致 */
         .article-list a {
             display: block;
             background: white;
@@ -74,14 +65,13 @@
 </head>
 <body>
 
-<!-- 统一的导航栏（已修复路径）-->
 <nav>
-    <a href="/tech-insight-hub/index.html">Home</a>
-    <a href="/tech-insight-hub/articles.html">Articles</a>
-    <a href="/tech-insight-hub/about.html">About</a>
-    <a href="/tech-insight-hub/contact.html">Contact</a>
-    <a href="/tech-insight-hub/privacy.html">Privacy</a>
-    <a href="/tech-insight-hub/terms.html">Terms</a>
+    <a href="/index.html">Home</a>
+    <a href="/articles.html">Articles</a>
+    <a href="/about.html">About</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
 </nav>
 
 <div class="container">
@@ -93,8 +83,8 @@
 </div>
 
 <script>
-// 自动从 JSON 加载文章（修正路径）
-fetch("/tech-insight-hub/article-list.json")
+// 正确路径：你的 JSON 在根目录
+fetch("/article-list.json")
     .then(response => response.json())
     .then(data => {
         let list = document.getElementById("articleList");
@@ -102,7 +92,7 @@ fetch("/tech-insight-hub/article-list.json")
 
         data.forEach(article => {
             let link = document.createElement("a");
-            link.href = "/tech-insight-hub/articles/" + article.file;
+            link.href = "/articles/" + article.file;  // 你的文章文件夹
             link.innerText = article.title;
             list.appendChild(link);
         });
