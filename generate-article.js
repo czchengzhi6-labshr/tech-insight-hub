@@ -1,103 +1,118 @@
-const axios = require("axios");
 const fs = require("fs");
+const crypto = require("crypto");
+const axios = require("axios");
 const path = require("path");
 
-async function generateArticle() {
-  console.log("📝 Generating tech-style article...");
+// =============== 随机封面图生成 ===============
+function getRandomCover() {
+  const topics = ["technology", "ai", "coding", "software", "computer"];
+  const topic = topics[Math.floor(Math.random() * topics.length)];
+  return `https://source.unsplash.com/random/1200x600/?${topic}`;
+}
 
-  const articlePrompt = `
-Write a high-quality, original English technology article (1000–1500 words).
-Style: futuristic, informative, scientific.
-Include one placeholder for advertisement:
-
----ADVERTISEMENT-BLOCK---
-
-Do NOT wrap output in code fences.
+// =============== 随机广告位 ===============
+function getAdHtml() {
+  return `
+  <div class="ad-box" style="padding:15px; border:1px solid #ccc; margin:20px 0; text-align:center;">
+    <p>🔔 广告位 | 你的广告可以放这里</p>
+  </div>
   `;
+}
 
-  const response = await axios.post(
+// =============== 自动生成阅读量 key ===============
+function generateArticleId() {
+  return crypto.randomBytes(8).toString("hex"); // 唯一 ID 用于记录阅读量
+}
+
+// =============== 生成文章 ===============
+async function generateArticle() {
+  const apiKey = process.env.DEEPSEEK_API_KEY;
+
+  const prompt = "写一篇有关最新科技趋势的技术文章，段落清晰，含标题。";
+
+  const article = await axios.post(
     "https://api.deepseek.com/v1/chat/completions",
     {
       model: "deepseek-chat",
-      messages: [
-        { role: "system", content: "You are an expert technology columnist." },
-        { role: "user", content: articlePrompt }
-      ]
+      messages: [{ role: "system", content: prompt }]
     },
     {
       headers: {
-        "Authorization": `Bearer ${process.env.DEEPSEEK_API_KEY}`,
+        "Authorization": `Bearer ${apiKey}`,
         "Content-Type": "application/json"
       }
     }
   );
 
-  return response.data.choices[0].message.content;
-}
+  const text = article.data.choices[0].message.content;
 
-async function generateCover() {
-  console.log("🎨 Generating cover image...");
+  const title = text.match(/^#\s*(.*)/)?.[1] || "未命名文章";
+  const fileName = title.replace(/\s+/g, "-").replace(/[^\w-]/g, "") + ".html";
+  const filePath = path.join("articles", fileName);
 
-  const imageUrl = "https://picsum.photos/1200/630";
-  const imgBuffer = (await axios.get(imageUrl, { responseType: "arraybuffer" })).data;
+  const articleId = generateArticleId();   // 用于阅读量统计
+  const cover = getRandomCover();         // 封面图
 
-  const fileName = `cover_${Date.now()}.jpg`;
-  const filePath = path.join("covers", fileName);
-
-  fs.writeFileSync(filePath, imgBuffer);
-  return fileName;
-}
-
-async function main() {
-  if (!fs.existsSync("articles")) fs.mkdirSync("articles");
-  if (!fs.existsSync("covers")) fs.mkdirSync("covers");
-
-  const articleText = await generateArticle();
-  const coverFile = await generateCover();
-
-  const articleFile = `article_${Date.now()}.html`;
-
-  const html = `
-<html>
+  const htmlContent = `
+<!DOCTYPE html>
+<html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <title>Tech Article</title>
-  <style>
-    body { font-family: Arial; padding: 20px; max-width: 900px; margin: auto; }
-    img { border-radius: 12px; }
-    .ad { margin-top: 40px; padding: 20px; background: #eee; text-align: center; }
-  </style>
+<meta charset="UTF-8">
+<title>${title}</title>
+<link rel="stylesheet" href="../style.css" />
 </head>
 <body>
-<img src="../covers/${coverFile}" style="width:100%;">
 
-<h1>AI Generated Tech Article</h1>
+<h1>${title}</h1>
 
-${articleText.replace(/\n/g, "<br>")}
+<img src="${cover}" class="cover-image" style="width:100%;border-radius:8px;margin:20px 0;" />
 
-<div class="ad">AD SPACE</div>
+<p>阅读量：<span id="views">加载中...</span></p>
+
+${getAdHtml()}
+
+<div class="content">
+${text.replace(/^#\s*(.*)/, "")}
+</div>
+
+${getAdHtml()}
+
+<script>
+// 记录阅读量
+fetch("https://raw.githubusercontent.com/${process.env.GITHUB_REPOSITORY}/main/view-count.json")
+  .then(r => r.json())
+  .then(data => {
+    if (!data["${articleId}"]) data["${articleId}"] = 0;
+    data["${articleId}"]++;
+
+    document.getElementById("views").textContent = data["${articleId}"];
+
+    // 推送更新（触发 workflow）
+    fetch("https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/contents/view-count.json", {
+      method: "PUT",
+      headers: {
+        "Authorization": "token ${process.env.GITHUB_TOKEN}",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: "Update view count",
+        content: btoa(JSON.stringify(data, null, 2)),
+        sha: "${process.env.VIEW_COUNT_SHA}"
+      })
+    });
+  });
+</script>
+
+${getAdHtml()}
 
 </body>
 </html>
-  `;
+`;
 
-  fs.writeFileSync(path.join("articles", articleFile), html);
+  fs.writeFileSync(filePath, htmlContent, "utf-8");
+  console.log("文章已生成:", filePath);
 
-  let list = [];
-  if (fs.existsSync("article-list.json")) {
-    list = JSON.parse(fs.readFileSync("article-list.json"));
-  }
-
-  list.push({
-    title: "AI Tech Article",
-    file: articleFile,
-    cover: coverFile,
-    timestamp: Date.now()
-  });
-
-  fs.writeFileSync("article-list.json", JSON.stringify(list, null, 2));
-
-  console.log("✔ Article + cover saved");
+  return { fileName, articleId, title };
 }
 
-main();
+generateArticle();
