@@ -3,10 +3,12 @@ const fs = require("fs");
 const path = require("path");
 
 async function generateArticle() {
+  console.log("📝 Generating tech-style article...");
+
   const articlePrompt = `
 Write a high-quality, original English technology article (1000–1500 words).
 Style: futuristic, informative, scientific.
-Insert an advertisement placeholder like this:
+Include one placeholder for advertisement:
 
 ---ADVERTISEMENT-BLOCK---
 
@@ -24,7 +26,7 @@ Do NOT wrap output in code fences.
     },
     {
       headers: {
-        Authorization: `Bearer ${process.env.DEEPSEEK_API_KEY}`,
+        "Authorization": `Bearer ${process.env.DEEPSEEK_API_KEY}`,
         "Content-Type": "application/json"
       }
     }
@@ -34,19 +36,21 @@ Do NOT wrap output in code fences.
 }
 
 async function generateCover() {
+  console.log("🎨 Generating cover image...");
+
   const imageUrl = "https://picsum.photos/1200/630";
   const imgBuffer = (await axios.get(imageUrl, { responseType: "arraybuffer" })).data;
 
-  if (!fs.existsSync("covers")) fs.mkdirSync("covers");
-
   const fileName = `cover_${Date.now()}.jpg`;
-  fs.writeFileSync(path.join("covers", fileName), imgBuffer);
+  const filePath = path.join("covers", fileName);
 
+  fs.writeFileSync(filePath, imgBuffer);
   return fileName;
 }
 
-(async () => {
+async function main() {
   if (!fs.existsSync("articles")) fs.mkdirSync("articles");
+  if (!fs.existsSync("covers")) fs.mkdirSync("covers");
 
   const articleText = await generateArticle();
   const coverFile = await generateCover();
@@ -54,23 +58,34 @@ async function generateCover() {
   const articleFile = `article_${Date.now()}.html`;
 
   const html = `
-<html><head><meta charset="UTF-8"><title>Tech Article</title></head><body>
-<div class="container">
-<img src="../covers/${coverFile}" style="width:100%; border-radius:12px;">
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Tech Article</title>
+  <style>
+    body { font-family: Arial; padding: 20px; max-width: 900px; margin: auto; }
+    img { border-radius: 12px; }
+    .ad { margin-top: 40px; padding: 20px; background: #eee; text-align: center; }
+  </style>
+</head>
+<body>
+<img src="../covers/${coverFile}" style="width:100%;">
+
 <h1>AI Generated Tech Article</h1>
+
 ${articleText.replace(/\n/g, "<br>")}
-<br><br>
+
 <div class="ad">AD SPACE</div>
-</div>
-</body></html>
-`;
+
+</body>
+</html>
+  `;
 
   fs.writeFileSync(path.join("articles", articleFile), html);
 
-  // 更新文章列表
   let list = [];
   if (fs.existsSync("article-list.json")) {
-    try { list = JSON.parse(fs.readFileSync("article-list.json")); } catch (e) {}
+    list = JSON.parse(fs.readFileSync("article-list.json"));
   }
 
   list.push({
@@ -83,4 +98,6 @@ ${articleText.replace(/\n/g, "<br>")}
   fs.writeFileSync("article-list.json", JSON.stringify(list, null, 2));
 
   console.log("✔ Article + cover saved");
-})();
+}
+
+main();
