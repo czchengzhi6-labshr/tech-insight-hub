@@ -2,7 +2,7 @@ name: Auto Tech Article Writer
 
 on:
   schedule:
-    - cron: "0 */4 * * *"   # 每4小时自动运行一次
+    - cron: "0 */4 * * *"   # 每4小时运行
   workflow_dispatch: {}
 
 jobs:
@@ -18,8 +18,8 @@ jobs:
         with:
           node-version: "18"
 
-      - name: Install dependencies
-        run: npm install axios fs path crypto
+      - name: Install axios only
+        run: npm install axios
 
       - name: Generate Tech Article + Cover Image
         env:
@@ -31,81 +31,70 @@ jobs:
           const path = require("path");
 
           async function generateArticle() {
-            console.log("📝 Generating tech-style article...");
+            console.log("📝 Generating tech article...");
 
-            const articlePrompt = `
-Write a high-quality, original English technology article (1000–1500 words).
-Style: futuristic, informative, scientific.
-Include one placeholder for advertisement:
+            const prompt = `
+Write a high-quality English technology article (1000–1500 words).
+Include ONE placeholder for advertisement:
 
 ---ADVERTISEMENT-BLOCK---
 
-Do NOT wrap output in code fences.
+Do NOT wrap content in code fences.
             `;
 
-            const response = await axios.post(
+            const res = await axios.post(
               "https://api.deepseek.com/v1/chat/completions",
               {
                 model: "deepseek-chat",
                 messages: [
-                  { role: "system", content: "You are an expert technology columnist." },
-                  { role: "user", content: articlePrompt }
+                  { role: "system", content: "You are a professional technology columnist." },
+                  { role: "user", content: prompt }
                 ]
               },
               {
                 headers: {
-                  "Authorization": `Bearer ${process.env.DEEPSEEK_API_KEY}`,
+                  "Authorization": "Bearer " + process.env.DEEPSEEK_API_KEY,
                   "Content-Type": "application/json"
                 }
               }
             );
 
-            return response.data.choices[0].message.content;
+            return res.data.choices[0].message.content;
           }
 
           async function generateCover() {
-            console.log("🎨 Generating cover image...");
+            const url = "https://picsum.photos/1200/630";
+            const buffer = (await axios.get(url, {responseType:"arraybuffer"})).data;
 
-            const imageUrl = "https://picsum.photos/1200/630"; 
-            // 免费随机图（科技风可以后面换高级接口）
+            const filename = `cover_${Date.now()}.jpg`;
+            if (!fs.existsSync("covers")) fs.mkdirSync("covers");
+            fs.writeFileSync(path.join("covers", filename), buffer);
 
-            const imgBuffer = (await axios.get(imageUrl, {responseType:"arraybuffer"})).data;
-
-            const fileName = `cover_${Date.now()}.jpg`;
-            const filePath = path.join("covers", fileName);
-
-            fs.writeFileSync(filePath, imgBuffer);
-            return fileName;
+            return filename;
           }
 
           async function main() {
             if (!fs.existsSync("articles")) fs.mkdirSync("articles");
-            if (!fs.existsSync("covers")) fs.mkdirSync("covers");
 
-            const articleText = await generateArticle();
-            const coverFile = await generateCover();
+            const article = await generateArticle();
+            const cover = await generateCover();
 
-            const articleFile = `article_${Date.now()}.html`;
+            const file = `article_${Date.now()}.html`;
 
             const html = `
 <html>
 <head><meta charset="UTF-8"><title>Tech Article</title></head>
 <body>
-<div class="container">
-<img src="../covers/${coverFile}" style="width:100%; border-radius:12px;">
+<img src="../covers/${cover}" style="width:100%; border-radius:12px;">
+
 <h1>AI Generated Tech Article</h1>
+${article.replace(/\n/g, "<br>")}
 
-${articleText.replace(/\n/g, "<br>")}
-
-<br><br>
-<div class="ad">AD SPACE</div>
-
-</div>
-</body>
-</html>
+<br><br><div class="ad">AD SPACE</div>
+</body></html>
             `;
 
-            fs.writeFileSync(path.join("articles", articleFile), html);
+            fs.writeFileSync(path.join("articles", file), html);
 
             let list = [];
             if (fs.existsSync("article-list.json")) {
@@ -114,14 +103,12 @@ ${articleText.replace(/\n/g, "<br>")}
 
             list.push({
               title: "AI Tech Article",
-              file: articleFile,
-              cover: coverFile,
+              file,
+              cover,
               timestamp: Date.now()
             });
 
             fs.writeFileSync("article-list.json", JSON.stringify(list, null, 2));
-
-            console.log("✔ Article + cover saved");
           }
 
           main();
@@ -132,5 +119,5 @@ ${articleText.replace(/\n/g, "<br>")}
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           git add .
-          git commit -m "Auto-generated tech article + cover" || echo "No changes"
+          git commit -m "Auto article" || echo "No changes"
           git push
