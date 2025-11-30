@@ -2,7 +2,7 @@ name: Auto Tech Article Writer
 
 on:
   schedule:
-    - cron: "0 */4 * * *"
+    - cron: "0 */4 * * *"   # 每4小时运行一次
   workflow_dispatch:
 
 jobs:
@@ -18,8 +18,8 @@ jobs:
         with:
           node-version: "18"
 
-      - name: Install dependencies
-        run: npm install axios fs path crypto
+      - name: Install axios
+        run: npm install axios
 
       - name: Generate Tech Article + Cover Image
         env:
