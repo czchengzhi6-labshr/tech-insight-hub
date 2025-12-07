@@ -6,6 +6,18 @@
     "excerpt": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Chip # The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Chip For decades, the engine of computing progres"
   },
   {
+    "title": "## 人工智能的下一波浪潮：生成式AI与多模态学习",
+    "file": "-AI.html",
+    "date": "2025-12-07",
+    "excerpt": "## 人工智能的下一波浪潮：生成式AI与多模态学习 阅读量： 加载中... 🔔 广告位 | 你的广告可以放这里 近年来，人工智能领域正经历着从感知智能到生成智能的深刻转变。生成式AI作为这一转变的核心驱动力，通过大规模预训练模型，展现出惊人的内容创造能力。从GPT系列模型到DALL-E、Stable Diffusion等图像生成模型，这些技术不仅能够生成高质量的文本和图像，甚至能够完成代码编写、"
+  },
+  {
+    "title": "容器化技术如何重塑现代软件部署",
+    "file": ".html",
+    "date": "2025-12-07",
+    "excerpt": "容器化技术如何重塑现代软件部署 发布时间：2025-11-30 容器化技术的出现彻底改变了软件开发与部署的方式。与传统虚拟化技术不同，容器通过共享主机操作系统内核，实现了更轻量级的资源隔离。Docker作为最具代表性的容器技术，让开发者能够将应用及其依赖打包成标准化单元，实现\"一次构建，随处运行\"的理想状态。 在实际应用中，容器技术带来了显著的效率提升。传统部署方式往往需要数小时的环境配置，而容器"
+  },
+  {
     "title": "**The Silent Shift: How Ambient Computing is Redefining Our Interaction with Technology**",
     "file": "3e697101735ffed1.html",
     "date": "2025-12-07",
@@ -82,17 +94,5 @@
     "file": "the-silent-shift-how-neuromorphic-computing-is-redesigning-the-ai-hardware-landscape.html",
     "date": "2025-12-07",
     "excerpt": "The Silent Shift: How Neuromorphic Computing is Redesigning the AI Hardware Landscape # The Silent Shift: How Neuromorphic Computing is Redesigning the AI Hardware Landscape For decades, the engine of"
-  },
-  {
-    "title": "## 人工智能的下一波浪潮：生成式AI与多模态学习",
-    "file": "-AI.html",
-    "date": "2025-12-07",
-    "excerpt": "## 人工智能的下一波浪潮：生成式AI与多模态学习 阅读量： 加载中... 🔔 广告位 | 你的广告可以放这里 近年来，人工智能领域正经历着从感知智能到生成智能的深刻转变。生成式AI作为这一转变的核心驱动力，通过大规模预训练模型，展现出惊人的内容创造能力。从GPT系列模型到DALL-E、Stable Diffusion等图像生成模型，这些技术不仅能够生成高质量的文本和图像，甚至能够完成代码编写、"
-  },
-  {
-    "title": "容器化技术如何重塑现代软件部署",
-    "file": ".html",
-    "date": "2025-12-07",
-    "excerpt": "容器化技术如何重塑现代软件部署 发布时间：2025-11-30 容器化技术的出现彻底改变了软件开发与部署的方式。与传统虚拟化技术不同，容器通过共享主机操作系统内核，实现了更轻量级的资源隔离。Docker作为最具代表性的容器技术，让开发者能够将应用及其依赖打包成标准化单元，实现\"一次构建，随处运行\"的理想状态。 在实际应用中，容器技术带来了显著的效率提升。传统部署方式往往需要数小时的环境配置，而容器"
   }
 ]
