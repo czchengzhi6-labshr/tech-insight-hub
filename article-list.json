@@ -1,9 +1,15 @@
 [
   {
-    "title": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Hardware Landscape",
-    "file": "the-silent-revolution-how-neuromorphic-computing-is-redesigning-the-ai-hardware-landscape.html",
+    "title": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Chip",
+    "file": "the-silent-revolution-how-neuromorphic-computing-is-redesigning-the-ai-chip.html",
     "date": "2025-12-16",
-    "excerpt": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Hardware Landscape # The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Hardware Landscape For decades, the"
+    "excerpt": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Chip # The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Chip For decades, the engine of computing progres"
+  },
+  {
+    "title": "## 人工智能的下一波浪潮：生成式AI与多模态学习",
+    "file": "-AI.html",
+    "date": "2025-12-16",
+    "excerpt": "## 人工智能的下一波浪潮：生成式AI与多模态学习 阅读量： 加载中... 🔔 广告位 | 你的广告可以放这里 近年来，人工智能领域正经历着从感知智能到生成智能的深刻转变。生成式AI作为这一转变的核心驱动力，通过大规模预训练模型，展现出惊人的内容创造能力。从GPT系列模型到DALL-E、Stable Diffusion等图像生成模型，这些技术不仅能够生成高质量的文本和图像，甚至能够完成代码编写、"
   },
   {
     "title": "容器化技术如何重塑现代软件部署",
@@ -66,10 +72,10 @@
     "excerpt": "The Silent Revolution: How Neuromorphic Computing is Redesigning AI’s Brain # The Silent Revolution: How Neuromorphic Computing is Redesigning AI’s Brain For decades, the engine of the digital age has"
   },
   {
-    "title": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Chip",
-    "file": "the-silent-revolution-how-neuromorphic-computing-is-redesigning-the-ai-chip.html",
+    "title": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Hardware Landscape",
+    "file": "the-silent-revolution-how-neuromorphic-computing-is-redesigning-the-ai-hardware-landscape.html",
     "date": "2025-12-16",
-    "excerpt": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Chip # The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Chip For decades, the engine of the digital age h"
+    "excerpt": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Hardware Landscape # The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Hardware Landscape For decades, the"
   },
   {
     "title": "The Silent Revolution: How Neuromorphic Computing is Reshaping Artificial Intelligence",
@@ -94,11 +100,5 @@
     "file": "the-silent-shift-how-neuromorphic-computing-is-redesigning-the-ai-hardware-landscape.html",
     "date": "2025-12-16",
     "excerpt": "The Silent Shift: How Neuromorphic Computing is Redesigning the AI Hardware Landscape # The Silent Shift: How Neuromorphic Computing is Redesigning the AI Hardware Landscape For decades, the engine of"
-  },
-  {
-    "title": "## 人工智能的下一波浪潮：生成式AI与多模态学习",
-    "file": "-AI.html",
-    "date": "2025-12-16",
-    "excerpt": "## 人工智能的下一波浪潮：生成式AI与多模态学习 阅读量： 加载中... 🔔 广告位 | 你的广告可以放这里 近年来，人工智能领域正经历着从感知智能到生成智能的深刻转变。生成式AI作为这一转变的核心驱动力，通过大规模预训练模型，展现出惊人的内容创造能力。从GPT系列模型到DALL-E、Stable Diffusion等图像生成模型，这些技术不仅能够生成高质量的文本和图像，甚至能够完成代码编写、"
   }
 ]
