@@ -6,42 +6,6 @@
     "excerpt": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Hardware Landscape # The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Hardware Landscape For decades, the"
   },
   {
-    "title": "The Silent Shift: How AI is Redefining the Industrial Robot",
-    "file": "the-silent-shift-how-ai-is-redefining-the-industrial-robot.html",
-    "date": "2025-12-31",
-    "excerpt": "The Silent Shift: How AI is Redefining the Industrial Robot # The Silent Shift: How AI is Redefining the Industrial Robot For decades, the image of an industrial robot has been a familiar one: a power"
-  },
-  {
-    "title": "The Silent Shift: How AI is Redesigning the Chip Industry from the Inside Out",
-    "file": "the-silent-shift-how-ai-is-redesigning-the-chip-industry-from-the-inside-out.html",
-    "date": "2025-12-31",
-    "excerpt": "The Silent Shift: How AI is Redesigning the Chip Industry from the Inside Out # The Silent Shift: How AI is Redesigning the Chip Industry from the Inside Out The engine of the artificial intelligence"
-  },
-  {
-    "title": "The Silent Shift: How Neuromorphic Computing is Redesigning the AI Hardware Landscape",
-    "file": "the-silent-shift-how-neuromorphic-computing-is-redesigning-the-ai-hardware-landscape.html",
-    "date": "2025-12-31",
-    "excerpt": "The Silent Shift: How Neuromorphic Computing is Redesigning the AI Hardware Landscape # The Silent Shift: How Neuromorphic Computing is Redesigning the AI Hardware Landscape For decades, the engine of"
-  },
-  {
-    "title": "深入理解JavaScript中的闭包机制",
-    "file": "JavaScript.html",
-    "date": "2025-12-31",
-    "excerpt": "深入理解JavaScript中的闭包机制 发布时间：2025-11-30 闭包是JavaScript中一个重要且强大的特性。当一个内部函数能够访问其外部函数作用域中的变量时，就形成了闭包。即使外部函数已经执行完毕，内部函数仍然保留着对外部变量的引用。 这种机制使得JavaScript能够实现许多高级编程模式。比如在事件处理、回调函数和模块化开发中，闭包都发挥着关键作用。通过闭包，我们可以创建私有变"
-  },
-  {
-    "title": "Top AI Productivity Tools Every Business Should Use in 2025",
-    "file": "ai-productivity-tools-2025.html",
-    "date": "2025-12-31",
-    "excerpt": "Home Articles About Contact Top AI Productivity Tools Every Business Should Use in 2025 As artificial intelligence accelerates, businesses are increasingly adopting AI tools to improve workflow effici"
-  },
-  {
-    "title": "Top AI Tools Transforming Businesses in 2025",
-    "file": "ai-tools-2025.html",
-    "date": "2025-12-31",
-    "excerpt": "Home Articles About Contact Privacy Terms Top AI Tools Transforming Businesses in 2025 Artificial Intelligence continues to reshape how companies operate, automate, and make decisions. In 2025, AI too"
-  },
-  {
     "title": "AI 2025：改变世界的 8 大趋势",
     "file": "ai-trend-2025.html",
     "date": "2025-12-31",
@@ -102,6 +66,24 @@
     "excerpt": "The Silent Shift: How AI is Redefining the Cybersecurity Battlefield # The Silent Shift: How AI is Redefining the Cybersecurity Battlefield ## Introduction: A New Era of Digital Conflict The cybersecu"
   },
   {
+    "title": "The Silent Shift: How AI is Redefining the Industrial Robot",
+    "file": "the-silent-shift-how-ai-is-redefining-the-industrial-robot.html",
+    "date": "2025-12-31",
+    "excerpt": "The Silent Shift: How AI is Redefining the Industrial Robot # The Silent Shift: How AI is Redefining the Industrial Robot For decades, the image of an industrial robot has been a familiar one: a power"
+  },
+  {
+    "title": "The Silent Shift: How AI is Redesigning the Chip Industry from the Inside Out",
+    "file": "the-silent-shift-how-ai-is-redesigning-the-chip-industry-from-the-inside-out.html",
+    "date": "2025-12-31",
+    "excerpt": "The Silent Shift: How AI is Redesigning the Chip Industry from the Inside Out # The Silent Shift: How AI is Redesigning the Chip Industry from the Inside Out The engine of the artificial intelligence"
+  },
+  {
+    "title": "The Silent Shift: How Neuromorphic Computing is Redesigning the AI Hardware Landscape",
+    "file": "the-silent-shift-how-neuromorphic-computing-is-redesigning-the-ai-hardware-landscape.html",
+    "date": "2025-12-31",
+    "excerpt": "The Silent Shift: How Neuromorphic Computing is Redesigning the AI Hardware Landscape # The Silent Shift: How Neuromorphic Computing is Redesigning the AI Hardware Landscape For decades, the engine of"
+  },
+  {
     "title": "## 人工智能的下一波浪潮：生成式AI与多模态学习",
     "file": "-AI.html",
     "date": "2025-12-31",
@@ -118,5 +100,23 @@
     "file": "3e697101735ffed1.html",
     "date": "2025-12-31",
     "excerpt": "**The Silent Shift: How Ambient Computing is Redefining Our Interaction with Technology** Views: Loading... 🔔 Advertisement Space — Your Ad Can Be Here **The Silent Shift: How Ambient Computing is Re"
+  },
+  {
+    "title": "深入理解JavaScript中的闭包机制",
+    "file": "JavaScript.html",
+    "date": "2025-12-31",
+    "excerpt": "深入理解JavaScript中的闭包机制 发布时间：2025-11-30 闭包是JavaScript中一个重要且强大的特性。当一个内部函数能够访问其外部函数作用域中的变量时，就形成了闭包。即使外部函数已经执行完毕，内部函数仍然保留着对外部变量的引用。 这种机制使得JavaScript能够实现许多高级编程模式。比如在事件处理、回调函数和模块化开发中，闭包都发挥着关键作用。通过闭包，我们可以创建私有变"
+  },
+  {
+    "title": "Top AI Productivity Tools Every Business Should Use in 2025",
+    "file": "ai-productivity-tools-2025.html",
+    "date": "2025-12-31",
+    "excerpt": "Home Articles About Contact Top AI Productivity Tools Every Business Should Use in 2025 As artificial intelligence accelerates, businesses are increasingly adopting AI tools to improve workflow effici"
+  },
+  {
+    "title": "Top AI Tools Transforming Businesses in 2025",
+    "file": "ai-tools-2025.html",
+    "date": "2025-12-31",
+    "excerpt": "Home Articles About Contact Privacy Terms Top AI Tools Transforming Businesses in 2025 Artificial Intelligence continues to reshape how companies operate, automate, and make decisions. In 2025, AI too"
   }
 ]
