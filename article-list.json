@@ -1,9 +1,39 @@
 [
   {
-    "title": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Chip",
-    "file": "the-silent-revolution-how-neuromorphic-computing-is-redesigning-the-ai-chip.html",
+    "title": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Hardware Landscape",
+    "file": "the-silent-revolution-how-neuromorphic-computing-is-redesigning-the-ai-hardware-landscape.html",
     "date": "2026-01-03",
-    "excerpt": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Chip # The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Chip For decades, the engine of computing progres"
+    "excerpt": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Hardware Landscape # The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Hardware Landscape ## Introduction:"
+  },
+  {
+    "title": "深入理解JavaScript中的闭包机制",
+    "file": "JavaScript.html",
+    "date": "2026-01-03",
+    "excerpt": "深入理解JavaScript中的闭包机制 发布时间：2025-11-30 闭包是JavaScript中一个重要且强大的特性。当一个内部函数能够访问其外部函数作用域中的变量时，就形成了闭包。即使外部函数已经执行完毕，内部函数仍然保留着对外部变量的引用。 这种机制使得JavaScript能够实现许多高级编程模式。比如在事件处理、回调函数和模块化开发中，闭包都发挥着关键作用。通过闭包，我们可以创建私有变"
+  },
+  {
+    "title": "Top AI Productivity Tools Every Business Should Use in 2025",
+    "file": "ai-productivity-tools-2025.html",
+    "date": "2026-01-03",
+    "excerpt": "Home Articles About Contact Top AI Productivity Tools Every Business Should Use in 2025 As artificial intelligence accelerates, businesses are increasingly adopting AI tools to improve workflow effici"
+  },
+  {
+    "title": "Top AI Tools Transforming Businesses in 2025",
+    "file": "ai-tools-2025.html",
+    "date": "2026-01-03",
+    "excerpt": "Home Articles About Contact Privacy Terms Top AI Tools Transforming Businesses in 2025 Artificial Intelligence continues to reshape how companies operate, automate, and make decisions. In 2025, AI too"
+  },
+  {
+    "title": "AI 2025：改变世界的 8 大趋势",
+    "file": "ai-trend-2025.html",
+    "date": "2026-01-03",
+    "excerpt": "首页 文章 关于我们 联系 AI 2025：改变世界的 8 大趋势 作者：Tech Insight Hub • 2025-02-01 2025 年已成为人工智能领域的重要拐点。随着算力、模型和落地能力不断提升，AI 正在改变生产力与商业模式……（文章正文略，可补充或替换） 趋势一：通用人工智能逐步走向实用化 （正文示例）... 趋势二：多模态 AI 成为新标准 （正文示例）.."
+  },
+  {
+    "title": "2025年AI趋势深度解析：技术、产业与未来",
+    "file": "ai_trends_2025.html",
+    "date": "2026-01-03",
+    "excerpt": "2025年AI趋势深度解析：技术、产业与未来 首页 文章列表 关于我们 （广告位 980×120） 进入 2025 年，人工智能已经从过去的“创新技术”正式进入到“基础设施时代”。无论是企业、政府还是个人， 都正在被新一代 AI 技术深刻影响。尤其是多模态大模型、自动化代理（AI Agents）、AI 芯片以及隐私计算， 正在构成未来 5 年技术竞争的核心力量。 一、通用 AI 与多模态的全面融合"
   },
   {
     "title": "The Rise of the Neuromorphic Chip: Mimicking the Brain to Power the Next AI Revolution",
@@ -36,10 +66,10 @@
     "excerpt": "The Silent Revolution: How Neuromorphic Computing is Redesigning AI's Hardware Brain # The Silent Revolution: How Neuromorphic Computing is Redesigning AI's Hardware Brain ## Beyond the Von Neumann Bo"
   },
   {
-    "title": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Hardware Landscape",
-    "file": "the-silent-revolution-how-neuromorphic-computing-is-redesigning-the-ai-hardware-landscape.html",
+    "title": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Chip",
+    "file": "the-silent-revolution-how-neuromorphic-computing-is-redesigning-the-ai-chip.html",
     "date": "2026-01-03",
-    "excerpt": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Hardware Landscape ## The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Hardware Landscape For decades, th"
+    "excerpt": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Chip # The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Chip For decades, the engine of computing progres"
   },
   {
     "title": "The Silent Revolution: How Neuromorphic Computing is Reshaping Artificial Intelligence",
@@ -88,35 +118,5 @@
     "file": "3e697101735ffed1.html",
     "date": "2026-01-03",
     "excerpt": "**The Silent Shift: How Ambient Computing is Redefining Our Interaction with Technology** Views: Loading... 🔔 Advertisement Space — Your Ad Can Be Here **The Silent Shift: How Ambient Computing is Re"
-  },
-  {
-    "title": "深入理解JavaScript中的闭包机制",
-    "file": "JavaScript.html",
-    "date": "2026-01-03",
-    "excerpt": "深入理解JavaScript中的闭包机制 发布时间：2025-11-30 闭包是JavaScript中一个重要且强大的特性。当一个内部函数能够访问其外部函数作用域中的变量时，就形成了闭包。即使外部函数已经执行完毕，内部函数仍然保留着对外部变量的引用。 这种机制使得JavaScript能够实现许多高级编程模式。比如在事件处理、回调函数和模块化开发中，闭包都发挥着关键作用。通过闭包，我们可以创建私有变"
-  },
-  {
-    "title": "Top AI Productivity Tools Every Business Should Use in 2025",
-    "file": "ai-productivity-tools-2025.html",
-    "date": "2026-01-03",
-    "excerpt": "Home Articles About Contact Top AI Productivity Tools Every Business Should Use in 2025 As artificial intelligence accelerates, businesses are increasingly adopting AI tools to improve workflow effici"
-  },
-  {
-    "title": "Top AI Tools Transforming Businesses in 2025",
-    "file": "ai-tools-2025.html",
-    "date": "2026-01-03",
-    "excerpt": "Home Articles About Contact Privacy Terms Top AI Tools Transforming Businesses in 2025 Artificial Intelligence continues to reshape how companies operate, automate, and make decisions. In 2025, AI too"
-  },
-  {
-    "title": "AI 2025：改变世界的 8 大趋势",
-    "file": "ai-trend-2025.html",
-    "date": "2026-01-03",
-    "excerpt": "首页 文章 关于我们 联系 AI 2025：改变世界的 8 大趋势 作者：Tech Insight Hub • 2025-02-01 2025 年已成为人工智能领域的重要拐点。随着算力、模型和落地能力不断提升，AI 正在改变生产力与商业模式……（文章正文略，可补充或替换） 趋势一：通用人工智能逐步走向实用化 （正文示例）... 趋势二：多模态 AI 成为新标准 （正文示例）.."
-  },
-  {
-    "title": "2025年AI趋势深度解析：技术、产业与未来",
-    "file": "ai_trends_2025.html",
-    "date": "2026-01-03",
-    "excerpt": "2025年AI趋势深度解析：技术、产业与未来 首页 文章列表 关于我们 （广告位 980×120） 进入 2025 年，人工智能已经从过去的“创新技术”正式进入到“基础设施时代”。无论是企业、政府还是个人， 都正在被新一代 AI 技术深刻影响。尤其是多模态大模型、自动化代理（AI Agents）、AI 芯片以及隐私计算， 正在构成未来 5 年技术竞争的核心力量。 一、通用 AI 与多模态的全面融合"
   }
 ]
