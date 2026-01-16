@@ -1,9 +1,33 @@
 [
   {
-    "title": "The Silent Revolution: How Neuromorphic Computing is Redesigning AI from the Ground Up",
-    "file": "the-silent-revolution-how-neuromorphic-computing-is-redesigning-ai-from-the-ground-up.html",
+    "title": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Hardware Landscape",
+    "file": "the-silent-revolution-how-neuromorphic-computing-is-redesigning-the-ai-hardware-landscape.html",
     "date": "2026-01-16",
-    "excerpt": "The Silent Revolution: How Neuromorphic Computing is Redesigning AI from the Ground Up # The Silent Revolution: How Neuromorphic Computing is Redesigning AI from the Ground Up For decades, the traject"
+    "excerpt": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Hardware Landscape ## The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Hardware Landscape For decades, th"
+  },
+  {
+    "title": "The Silent Revolution: How Neuromorphic Computing is Reshaping Artificial Intelligence",
+    "file": "the-silent-revolution-how-neuromorphic-computing-is-reshaping-artificial-intelligence.html",
+    "date": "2026-01-16",
+    "excerpt": "The Silent Revolution: How Neuromorphic Computing is Reshaping Artificial Intelligence # The Silent Revolution: How Neuromorphic Computing is Reshaping Artificial Intelligence For decades, the traject"
+  },
+  {
+    "title": "The Silent Shift: How AI is Redefining the Cybersecurity Battlefield",
+    "file": "the-silent-shift-how-ai-is-redefining-the-cybersecurity-battlefield.html",
+    "date": "2026-01-16",
+    "excerpt": "The Silent Shift: How AI is Redefining the Cybersecurity Battlefield # The Silent Shift: How AI is Redefining the Cybersecurity Battlefield ## Introduction: A New Era of Digital Conflict The cybersecu"
+  },
+  {
+    "title": "The Silent Shift: How AI is Redefining the Industrial Robot",
+    "file": "the-silent-shift-how-ai-is-redefining-the-industrial-robot.html",
+    "date": "2026-01-16",
+    "excerpt": "The Silent Shift: How AI is Redefining the Industrial Robot # The Silent Shift: How AI is Redefining the Industrial Robot For decades, the image of an industrial robot has been a familiar one: a power"
+  },
+  {
+    "title": "The Silent Shift: How AI is Redesigning the Chip Industry from the Inside Out",
+    "file": "the-silent-shift-how-ai-is-redesigning-the-chip-industry-from-the-inside-out.html",
+    "date": "2026-01-16",
+    "excerpt": "The Silent Shift: How AI is Redesigning the Chip Industry from the Inside Out # The Silent Shift: How AI is Redesigning the Chip Industry from the Inside Out The engine of the artificial intelligence"
   },
   {
     "title": "The Silent Shift: How Edge AI is Redistributing Computational Intelligence",
@@ -16,6 +40,42 @@
     "file": "the-silent-shift-how-neuromorphic-computing-is-redesigning-the-ai-hardware-landscape.html",
     "date": "2026-01-16",
     "excerpt": "The Silent Shift: How Neuromorphic Computing is Redesigning the AI Hardware Landscape # The Silent Shift: How Neuromorphic Computing is Redesigning the AI Hardware Landscape For decades, the engine of"
+  },
+  {
+    "title": "## 人工智能的下一波浪潮：生成式AI与多模态学习",
+    "file": "-AI.html",
+    "date": "2026-01-16",
+    "excerpt": "## 人工智能的下一波浪潮：生成式AI与多模态学习 阅读量： 加载中... 🔔 广告位 | 你的广告可以放这里 近年来，人工智能领域正经历着从感知智能到生成智能的深刻转变。生成式AI作为这一转变的核心驱动力，通过大规模预训练模型，展现出惊人的内容创造能力。从GPT系列模型到DALL-E、Stable Diffusion等图像生成模型，这些技术不仅能够生成高质量的文本和图像，甚至能够完成代码编写、"
+  },
+  {
+    "title": "容器化技术如何重塑现代软件部署",
+    "file": ".html",
+    "date": "2026-01-16",
+    "excerpt": "容器化技术如何重塑现代软件部署 发布时间：2025-11-30 容器化技术的出现彻底改变了软件开发与部署的方式。与传统虚拟化技术不同，容器通过共享主机操作系统内核，实现了更轻量级的资源隔离。Docker作为最具代表性的容器技术，让开发者能够将应用及其依赖打包成标准化单元，实现\"一次构建，随处运行\"的理想状态。 在实际应用中，容器技术带来了显著的效率提升。传统部署方式往往需要数小时的环境配置，而容器"
+  },
+  {
+    "title": "**The Silent Shift: How Ambient Computing is Redefining Our Interaction with Technology**",
+    "file": "3e697101735ffed1.html",
+    "date": "2026-01-16",
+    "excerpt": "**The Silent Shift: How Ambient Computing is Redefining Our Interaction with Technology** Views: Loading... 🔔 Advertisement Space — Your Ad Can Be Here **The Silent Shift: How Ambient Computing is Re"
+  },
+  {
+    "title": "深入理解JavaScript中的闭包机制",
+    "file": "JavaScript.html",
+    "date": "2026-01-16",
+    "excerpt": "深入理解JavaScript中的闭包机制 发布时间：2025-11-30 闭包是JavaScript中一个重要且强大的特性。当一个内部函数能够访问其外部函数作用域中的变量时，就形成了闭包。即使外部函数已经执行完毕，内部函数仍然保留着对外部变量的引用。 这种机制使得JavaScript能够实现许多高级编程模式。比如在事件处理、回调函数和模块化开发中，闭包都发挥着关键作用。通过闭包，我们可以创建私有变"
+  },
+  {
+    "title": "Top AI Productivity Tools Every Business Should Use in 2025",
+    "file": "ai-productivity-tools-2025.html",
+    "date": "2026-01-16",
+    "excerpt": "Home Articles About Contact Top AI Productivity Tools Every Business Should Use in 2025 As artificial intelligence accelerates, businesses are increasingly adopting AI tools to improve workflow effici"
+  },
+  {
+    "title": "Top AI Tools Transforming Businesses in 2025",
+    "file": "ai-tools-2025.html",
+    "date": "2026-01-16",
+    "excerpt": "Home Articles About Contact Privacy Terms Top AI Tools Transforming Businesses in 2025 Artificial Intelligence continues to reshape how companies operate, automate, and make decisions. In 2025, AI too"
   },
   {
     "title": "AI 2025：改变世界的 8 大趋势",
@@ -54,6 +114,12 @@
     "excerpt": "The Silent Revolution: How Neuromorphic Chips Are Redesigning the AI Hardware Landscape ## The Silent Revolution: How Neuromorphic Chips Are Redesigning the AI Hardware Landscape For decades, the engi"
   },
   {
+    "title": "The Silent Revolution: How Neuromorphic Computing is Redesigning AI from the Ground Up",
+    "file": "the-silent-revolution-how-neuromorphic-computing-is-redesigning-ai-from-the-ground-up.html",
+    "date": "2026-01-16",
+    "excerpt": "The Silent Revolution: How Neuromorphic Computing is Redesigning AI from the Ground Up # The Silent Revolution: How Neuromorphic Computing is Redesigning AI from the Ground Up For decades, the traject"
+  },
+  {
     "title": "The Silent Revolution: How Neuromorphic Computing is Redesigning AI's Brain",
     "file": "the-silent-revolution-how-neuromorphic-computing-is-redesigning-ai-s-brain.html",
     "date": "2026-01-16",
@@ -76,71 +142,5 @@
     "file": "the-silent-revolution-how-neuromorphic-computing-is-redesigning-the-ai-chip.html",
     "date": "2026-01-16",
     "excerpt": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Chip # The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Chip For decades, the engine of computing progres"
-  },
-  {
-    "title": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Hardware Landscape",
-    "file": "the-silent-revolution-how-neuromorphic-computing-is-redesigning-the-ai-hardware-landscape.html",
-    "date": "2026-01-16",
-    "excerpt": "The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Hardware Landscape # The Silent Revolution: How Neuromorphic Computing is Redesigning the AI Hardware Landscape For decades, the"
-  },
-  {
-    "title": "The Silent Revolution: How Neuromorphic Computing is Reshaping Artificial Intelligence",
-    "file": "the-silent-revolution-how-neuromorphic-computing-is-reshaping-artificial-intelligence.html",
-    "date": "2026-01-16",
-    "excerpt": "The Silent Revolution: How Neuromorphic Computing is Reshaping Artificial Intelligence # The Silent Revolution: How Neuromorphic Computing is Reshaping Artificial Intelligence For decades, the traject"
-  },
-  {
-    "title": "The Silent Shift: How AI is Redefining the Cybersecurity Battlefield",
-    "file": "the-silent-shift-how-ai-is-redefining-the-cybersecurity-battlefield.html",
-    "date": "2026-01-16",
-    "excerpt": "The Silent Shift: How AI is Redefining the Cybersecurity Battlefield # The Silent Shift: How AI is Redefining the Cybersecurity Battlefield ## Introduction: A New Era of Digital Conflict The cybersecu"
-  },
-  {
-    "title": "The Silent Shift: How AI is Redefining the Industrial Robot",
-    "file": "the-silent-shift-how-ai-is-redefining-the-industrial-robot.html",
-    "date": "2026-01-16",
-    "excerpt": "The Silent Shift: How AI is Redefining the Industrial Robot # The Silent Shift: How AI is Redefining the Industrial Robot For decades, the image of an industrial robot has been a familiar one: a power"
-  },
-  {
-    "title": "The Silent Shift: How AI is Redesigning the Chip Industry from the Inside Out",
-    "file": "the-silent-shift-how-ai-is-redesigning-the-chip-industry-from-the-inside-out.html",
-    "date": "2026-01-16",
-    "excerpt": "The Silent Shift: How AI is Redesigning the Chip Industry from the Inside Out # The Silent Shift: How AI is Redesigning the Chip Industry from the Inside Out The engine of the artificial intelligence"
-  },
-  {
-    "title": "## 人工智能的下一波浪潮：生成式AI与多模态学习",
-    "file": "-AI.html",
-    "date": "2026-01-16",
-    "excerpt": "## 人工智能的下一波浪潮：生成式AI与多模态学习 阅读量： 加载中... 🔔 广告位 | 你的广告可以放这里 近年来，人工智能领域正经历着从感知智能到生成智能的深刻转变。生成式AI作为这一转变的核心驱动力，通过大规模预训练模型，展现出惊人的内容创造能力。从GPT系列模型到DALL-E、Stable Diffusion等图像生成模型，这些技术不仅能够生成高质量的文本和图像，甚至能够完成代码编写、"
-  },
-  {
-    "title": "容器化技术如何重塑现代软件部署",
-    "file": ".html",
-    "date": "2026-01-16",
-    "excerpt": "容器化技术如何重塑现代软件部署 发布时间：2025-11-30 容器化技术的出现彻底改变了软件开发与部署的方式。与传统虚拟化技术不同，容器通过共享主机操作系统内核，实现了更轻量级的资源隔离。Docker作为最具代表性的容器技术，让开发者能够将应用及其依赖打包成标准化单元，实现\"一次构建，随处运行\"的理想状态。 在实际应用中，容器技术带来了显著的效率提升。传统部署方式往往需要数小时的环境配置，而容器"
-  },
-  {
-    "title": "**The Silent Shift: How Ambient Computing is Redefining Our Interaction with Technology**",
-    "file": "3e697101735ffed1.html",
-    "date": "2026-01-16",
-    "excerpt": "**The Silent Shift: How Ambient Computing is Redefining Our Interaction with Technology** Views: Loading... 🔔 Advertisement Space — Your Ad Can Be Here **The Silent Shift: How Ambient Computing is Re"
-  },
-  {
-    "title": "深入理解JavaScript中的闭包机制",
-    "file": "JavaScript.html",
-    "date": "2026-01-16",
-    "excerpt": "深入理解JavaScript中的闭包机制 发布时间：2025-11-30 闭包是JavaScript中一个重要且强大的特性。当一个内部函数能够访问其外部函数作用域中的变量时，就形成了闭包。即使外部函数已经执行完毕，内部函数仍然保留着对外部变量的引用。 这种机制使得JavaScript能够实现许多高级编程模式。比如在事件处理、回调函数和模块化开发中，闭包都发挥着关键作用。通过闭包，我们可以创建私有变"
-  },
-  {
-    "title": "Top AI Productivity Tools Every Business Should Use in 2025",
-    "file": "ai-productivity-tools-2025.html",
-    "date": "2026-01-16",
-    "excerpt": "Home Articles About Contact Top AI Productivity Tools Every Business Should Use in 2025 As artificial intelligence accelerates, businesses are increasingly adopting AI tools to improve workflow effici"
-  },
-  {
-    "title": "Top AI Tools Transforming Businesses in 2025",
-    "file": "ai-tools-2025.html",
-    "date": "2026-01-16",
-    "excerpt": "Home Articles About Contact Privacy Terms Top AI Tools Transforming Businesses in 2025 Artificial Intelligence continues to reshape how companies operate, automate, and make decisions. In 2025, AI too"
   }
 ]
